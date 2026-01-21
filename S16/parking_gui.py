@@ -11,7 +11,7 @@ import uuid
 class Plaza:
     def __init__(self, numero, tipo):
         self.numero = numero
-        self.tipo = tipo        # coche / moto
+        self.tipo = tipo        # coche / moto / electrico
         self.estado = "libre"   # libre / ocupada
 
     def ocupar(self):
@@ -46,7 +46,11 @@ class Parking:
     =========================
     PARTE A — INTERFAZ PÚBLICA
     =========================
-    La interfaz gráfica SOLO usa estos métodos
+    La interfaz gráfica SOLO usa estos métodos:
+    - entrar
+    - salir
+    - resumen
+    - listar_plazas
     """
 
     def __init__(self):
@@ -59,7 +63,8 @@ class Parking:
         # =========================
         self.tarifas = {
             "coche": 2.50,
-            "moto": 1.50
+            "moto": 1.50,
+            "electrico": 2.00
         }
 
     def agregar_plaza(self, plaza):
@@ -84,7 +89,7 @@ class Parking:
 
         ticket, plaza = self.tickets.pop(codigo_ticket)
 
-        # simulamos tiempo
+        # Simulamos tiempo de estancia
         ticket.hora_entrada -= timedelta(minutes=90)
         ticket.cerrar()
 
@@ -132,7 +137,7 @@ class ParkingApp(tb.Window):
     def __init__(self, parking):
         super().__init__()
         self.title("Parking")
-        self.geometry("650x800")
+        self.geometry("700x800")
         self.parking = parking
 
         self.crear_widgets()
@@ -151,7 +156,11 @@ class ParkingApp(tb.Window):
         self.entry_matricula = tb.Entry(entrada)
         self.entry_matricula.pack(pady=5)
 
-        self.combo_tipo = tb.Combobox(entrada, values=["coche", "moto"], state="readonly")
+        self.combo_tipo = tb.Combobox(
+            entrada,
+            values=["coche", "moto", "electrico"],
+            state="readonly"
+        )
         self.combo_tipo.current(0)
         self.combo_tipo.pack(pady=5)
 
@@ -165,7 +174,7 @@ class ParkingApp(tb.Window):
 
         tb.Button(salida, text="Salir", command=self.salir).pack(pady=5)
 
-        self.texto = tb.Text(self, height=8, state="disabled")
+        self.texto = tb.Text(self, height=9, state="disabled")
         self.texto.pack(fill="both", padx=20, pady=10)
 
     def actualizar(self):
@@ -179,8 +188,12 @@ class ParkingApp(tb.Window):
 
         for numero, tipo, estado in self.parking.listar_plazas():
             texto = f"P{numero}\n{tipo}\n{estado}"
-            tb.Label(self.frame_plazas, text=texto, relief="solid", width=12)\
-                .pack(side="left", padx=5, pady=5)
+            tb.Label(
+                self.frame_plazas,
+                text=texto,
+                relief="solid",
+                width=12
+            ).pack(side="left", padx=5, pady=5)
 
     def entrar(self):
         matricula = self.entry_matricula.get().strip()
@@ -193,7 +206,7 @@ class ParkingApp(tb.Window):
         resultado = self.parking.entrar(matricula, tipo)
 
         if resultado is None:
-            messagebox.showerror("Error", "No hay plazas disponibles")
+            messagebox.showerror("Error", "No hay plazas disponibles para ese tipo")
             return
 
         codigo, plaza = resultado
@@ -201,7 +214,10 @@ class ParkingApp(tb.Window):
 
         self.texto.config(state="normal")
         self.texto.delete("1.0", "end")
-        self.texto.insert("end", f"Entrada correcta\nPlaza: {plaza}\nTicket: {codigo}")
+        self.texto.insert(
+            "end",
+            f"Entrada correcta\nPlaza: {plaza}\nTicket: {codigo}"
+        )
         self.texto.config(state="disabled")
 
         self.entry_matricula.delete(0, "end")
@@ -234,19 +250,23 @@ class ParkingApp(tb.Window):
 
 
 # =========================
-# MAIN
+# PROGRAMA PRINCIPAL
 # =========================
 
 if __name__ == "__main__":
     parking = Parking()
 
     # =========================
-    # PARTE B — Tipos de plazas
+    # PARTE B — TIPOS DE PLAZAS
     # =========================
     for i in range(1, 6):
         parking.agregar_plaza(Plaza(i, "coche"))
+
     for i in range(6, 9):
         parking.agregar_plaza(Plaza(i, "moto"))
+
+    for i in range(9, 11):
+        parking.agregar_plaza(Plaza(i, "electrico"))
 
     app = ParkingApp(parking)
     app.mainloop()
