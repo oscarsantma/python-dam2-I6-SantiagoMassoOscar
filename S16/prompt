@@ -1,0 +1,27 @@
+Prompt 1 — Entender el ejercicio
+
+Tengo una práctica de programación orientada a objetos sobre un parking. ¿Me puedes explicar qué pide exactamente el ejercicio y qué cosas son obligatorias?
+
+Prompt 2 — Revisar mi código inicial
+
+Este es el código que tengo hecho del parking. ¿Cumple con lo que pide la práctica o tengo que cambiar cosas?
+
+Prompt 3 — Interfaz pública del dominio
+
+El ejercicio dice que la clase Parking tiene que tener una interfaz pública clara. ¿Qué métodos debería tener como mínimo y por qué?
+
+Prompt 4 — Separar lógica y GUI
+
+¿Cómo puedo hacer para que la interfaz gráfica no acceda directamente a las plazas ni a las listas internas del parking?
+
+Prompt 5 — Nivel principiante
+
+Quiero que el código quede sencillo, como de alguien que está empezando, sin cosas avanzadas ni patrones raros. ¿Puedes adaptarlo a ese nivel?
+
+Prompt 6 — Cambio futuro
+
+Tengo que preparar un cambio futuro (tarifas o tipos de plazas). ¿Cuál es el más fácil de justificar y cómo lo puedo dejar preparado en el código?
+
+Prompt 7 — Revisión final
+
+¿Puedes revisar el código final y decirme qué partes corresponden a la Parte A y cuáles a la Parte B para poder explicarlo en clase?
