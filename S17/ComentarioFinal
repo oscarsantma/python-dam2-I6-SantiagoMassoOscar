@@ -1,0 +1,4 @@
+He utilizado la IA como apoyo para resolver dudas puntuales sobre algunas líneas de código y para confirmar si el diseño seguía una orientación a objetos correcta.
+Por ejemplo, consulté sobre la mejor forma de controlar que no se puedan agregar productos a un pedido que ya ha sido pagado.
+A partir de eso, decidí comprobar el estado del pedido dentro del método `agregar_producto`, evitando así estados inválidos del sistema.
+Las decisiones principales sobre las clases, sus responsabilidades y las reglas del sistema han sido tomadas por mí.
